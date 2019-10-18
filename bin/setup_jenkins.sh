@@ -34,7 +34,7 @@ items:
       type: "Git"
       git:
         uri: "https://github.com/sidarora/homework.git"
-      contextDir: "contextDir"
+      contextDir: "openshift-tasks"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
