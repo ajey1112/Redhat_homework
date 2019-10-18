@@ -41,13 +41,13 @@ items:
         jenkinsfilePath: Jenkinsfile
         env:
           - name: "prefix"
-            value: "gpte-hw"
+            value: "${GUID}"
           - name: "clusterDomain"
             value: "apps.na311.openshift.opentlc.com"
           - name: "devProject"
-            value: "b6a7-tasks-dev"
+            value: "${GUID}-tasks-dev"
           - name: "prodProject"
-            value: "b6a7-tasks-prod"
+            value: "${GUID}-tasks-prod"
 kind: List
 metadata: []" | oc create -f - -n ${GUID}-jenkins
 
