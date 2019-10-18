@@ -33,9 +33,9 @@ podTemplate(
       def version = getVersionFromPom("pom.xml")
 
       // TBD Set the tag for the development image: version + build number
-      def devTag  = "0.0-0"
+      def devTag  = '${devTag} (tasks-dev)'
       // Set the tag for the production image: version
-      def prodTag = "0.0"
+      def prodTag = "1.0"
 
       // Using Maven build the war file
       // Do not run tests in this step
@@ -177,7 +177,7 @@ podTemplate(
                 //sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:hello docker://image-registry.openshift-image-registry.svc.cluster.local:5000/${devProject}/tasks:${devTag} docker://nexus-registry-${prefix}-nexus.apps.cluster-0afd.0afd.example.opentlc.com/tasks:${devTag}"
     
                 // OpenShift 3
-                sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:admin123 docker://docker-registry.default.svc.cluster.local:5000/${devProject}/tasks:${devTag} docker://nexus3-registry.${prefix}-nexus.svc.cluster.local:5000/tasks:${devTag}"
+                sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:redhat docker://docker-registry.default.svc.cluster.local:5000/${devProject}/tasks:${devTag} docker://nexus3-registry.${prefix}-nexus.svc.cluster.local:5000/tasks:${devTag}"
     
                 // Tag the built image with the production tag.
                 openshift.withCluster() {
@@ -223,7 +223,7 @@ podTemplate(
                       // OpenShift 4
                       //dc.spec.template.spec.containers[0].image="image-registry.openshift-image-registry.svc:5000/${devProject}/tasks:${prodTag}"
                       // OpenShift 3
-                       dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:${prodTag}"
+                       dc.spec.template.spec.containers[0].image="docker-registry.default.svc:5000/${devProject}/tasks:'${prodTag}'"
             
                       openshift.apply(dc)
 
